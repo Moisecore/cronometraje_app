@@ -1,30 +1,38 @@
-import 'package:cronometraje_app/models/chrono_model.dart';
-import 'package:cronometraje_app/services/chrono_service.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import '../models/chrono_model.dart';
+import '../services/chrono_service.dart';
 
-// Chrono ViewModel (Logic for managing timers)
-class ChronoViewmodel extends ChangeNotifier {
-  /**late ChronoService _chronoService;
+/// ViewModel que maneja el estado de los Chronos.
+class ChronoViewModel extends ChangeNotifier {
+  final ChronoService _chronoService;
+
   List<ChronoModel> _chronos = [];
-
-  ChronoViewModel(chronoService) {
-    chronoService.chronoStream.listen((chronos) {
-      _chronos = chronos;
-      notifyListeners();
-    });
-  }
-
   List<ChronoModel> get chronos => _chronos;
 
-  void addChrono(String name, int duration) {
-    _chronoService.addChrono(ChronoModel(name: name, duration: duration));
+  ChronoViewModel(this._chronoService);
+  /**
+  /// Fetches all Chronos from the database and updates the state.
+  Future<void> fetchChronos() async {
+    _chronos = await _chronoService.getAllChronos();
+    notifyListeners();
   }
 
-  void startChrono(int index) {
-    _chronoService.startChrono(index);
+  /// Adds a new Chrono and updates the state.
+  Future<void> addChrono(String name) async {
+    final newChrono = ChronoModel(name: name, createdAt: DateTime.now());
+    await _chronoService.insertChrono(newChrono);
+    await fetchChronos(); // Refresh the list after insertion
   }
 
-  void stopChrono(int index) {
-    _chronoService.stopChrono(index);
+  /// Deletes a Chrono and updates the state.
+  Future<void> deleteChrono(int id) async {
+    await _chronoService.deleteChrono(id);
+    await fetchChronos();
+  }
+
+  /// Updates the state of a Chrono (start, pause, stop).
+  Future<void> updateChronoState(int id, ChronoState newState) async {
+    await _chronoService.updateChronoState(id, newState);
+    await fetchChronos();
   }*/
 }
