@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 /// Vista de pantalla principal.
+/// 
+/// Se muestran dos botones: ver los chronos y ver los registros.
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
@@ -22,7 +24,7 @@ class HomeView extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondary,
               ),
-              onPressed: () => context.go('/myChronos'),
+              onPressed: () => context.push('/myChronos'),
               child: const Text('Mis Chronos'),
             ),
             const SizedBox(height: 20),
@@ -30,7 +32,7 @@ class HomeView extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.secondary,
               ),
-              onPressed: () => context.go('/myRecords'),
+              onPressed: () => context.push('/myRecords'),
               child: const Text('Mis registros'),
             ),
           ],

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import '../models/chrono_model.dart';
-import '../services/chrono_service.dart';
+import 'package:cronometraje_app/models/chrono_model.dart';
+import 'package:cronometraje_app/services/chrono_service.dart';
 
 /// ViewModel que maneja el estado de los Chronos.
 class ChronoViewModel extends ChangeNotifier {

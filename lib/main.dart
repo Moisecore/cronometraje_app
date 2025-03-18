@@ -1,4 +1,5 @@
 import 'package:cronometraje_app/services/chrono_service.dart';
+import 'package:cronometraje_app/views/my_chronos_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -28,11 +29,11 @@ final GoRouter _router = GoRouter(
         child: const HomeView()
       ),
     ),
-    /**GoRoute(
+    GoRoute(
       path: '/myChronos',
       builder: (context, state) => const MyChronosView(),
     ),
-    GoRoute(
+    /**GoRoute(
       path: '/createChrono',
       builder: (context, state) => const CreateChronoView(),
     ),
@@ -57,6 +58,7 @@ final GoRouter _router = GoRouter(
   ],
 );
 
+/// Configuración del tema de la app.
 final ThemeData chronoTheme = ThemeData(
   primaryColor: Color(0xFF007AFF),
   colorScheme: ColorScheme.fromSeed(
