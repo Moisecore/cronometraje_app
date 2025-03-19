@@ -39,6 +39,8 @@ dependencies:
   upgrader: ^11.3.1
   flutter_localizations:
     sdk: flutter
+  sqflite: ^2.4.2
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:

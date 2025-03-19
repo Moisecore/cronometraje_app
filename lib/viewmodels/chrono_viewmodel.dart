@@ -10,29 +10,35 @@ class ChronoViewModel extends ChangeNotifier {
   List<ChronoModel> get chronos => _chronos;
 
   ChronoViewModel(this._chronoService);
-  /**
-  /// Fetches all Chronos from the database and updates the state.
+  
+  /// Trae todos los Chronos (visibles) de la base de datos y actualiza el state.
   Future<void> fetchChronos() async {
-    _chronos = await _chronoService.getAllChronos();
+    _chronos = await _chronoService.getChronos();
     notifyListeners();
   }
 
-  /// Adds a new Chrono and updates the state.
+  /// Agrega un nuevo Chrono y actualiza el state.
   Future<void> addChrono(String name) async {
     final newChrono = ChronoModel(name: name, createdAt: DateTime.now());
-    await _chronoService.insertChrono(newChrono);
-    await fetchChronos(); // Refresh the list after insertion
+    await _chronoService.addChrono(newChrono);
+    await fetchChronos(); // Refresca la lista luego de la inserción.
   }
 
-  /// Deletes a Chrono and updates the state.
+  /// Borra un Chrono y actualiza el state.
   Future<void> deleteChrono(int id) async {
     await _chronoService.deleteChrono(id);
     await fetchChronos();
   }
 
-  /// Updates the state of a Chrono (start, pause, stop).
+  /// Oculta un Chrono y actualiza el state.
+  Future<void> hideChrono(int id) async {
+    await _chronoService.softDeleteChrono(id);
+    await fetchChronos();
+  }
+
+  /// Actualiza el estado de un Chrono (0: stopped, 1: running, 2: paused) y el state.
   Future<void> updateChronoState(int id, ChronoState newState) async {
     await _chronoService.updateChronoState(id, newState);
     await fetchChronos();
-  }*/
+  }
 }

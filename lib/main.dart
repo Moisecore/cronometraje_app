@@ -1,4 +1,5 @@
 import 'package:cronometraje_app/services/chrono_service.dart';
+import 'package:cronometraje_app/views/create_chrono_view.dart';
 import 'package:cronometraje_app/views/my_chronos_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,11 +34,11 @@ final GoRouter _router = GoRouter(
       path: '/myChronos',
       builder: (context, state) => const MyChronosView(),
     ),
-    /**GoRoute(
+    GoRoute(
       path: '/createChrono',
       builder: (context, state) => const CreateChronoView(),
     ),
-    GoRoute(
+    /**GoRoute(
       path: '/chrono/:id',
       builder: (context, state) {
         final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
