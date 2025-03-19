@@ -1,6 +1,8 @@
+import 'package:cronometraje_app/models/chrono_model.dart';
 import 'package:cronometraje_app/services/chrono_service.dart';
 import 'package:cronometraje_app/views/create_chrono_view.dart';
 import 'package:cronometraje_app/views/my_chronos_view.dart';
+import 'package:cronometraje_app/views/single_chrono_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -38,22 +40,20 @@ final GoRouter _router = GoRouter(
       path: '/createChrono',
       builder: (context, state) => const CreateChronoView(),
     ),
-    /**GoRoute(
-      path: '/chrono/:id',
+    GoRoute(
+      path: '/chrono',
       builder: (context, state) {
-        final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
-        return SingleChronoView(chronoId: id);
+        return SingleChronoView(chrono: state.extra as ChronoModel);
       },
     ),
-    GoRoute(
+    /**GoRoute(
       path: '/myRecords',
       builder: (context, state) => const MyRecordsView(),
-    ),
-    GoRoute(
-      path: '/chrono/:id/records',
+    ),*/
+    /**GoRoute(
+      path: '/chrono/records',
       builder: (context, state) {
-        final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
-        return SingleChronoRecordsView(chronoId: id);
+        return SingleChronoRecordsView(chrono: state.extra as ChronoModel);
       }
     ),*/
   ],

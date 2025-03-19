@@ -26,7 +26,7 @@ class ChronoViewModel extends ChangeNotifier {
 
   /// Borra un Chrono y actualiza el state.
   Future<void> deleteChrono(int id) async {
-    await _chronoService.deleteChrono(id);
+    await _chronoService.deleteChronoPermanently(id);
     await fetchChronos();
   }
 

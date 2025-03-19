@@ -54,34 +54,42 @@ class MyChronosViewState extends State<MyChronosView> {
                     ),
                   ),
                   Expanded(
-                    child: chronos.isEmpty
-                    ? Center(
-                        child: Text(
-                          'No has creado ningún Chrono',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      )
-                    : ListView.builder(
-                        itemCount: chronos.length,
-                        itemBuilder: (context, index) {
-                          final chrono = chronos[index];
-                          return ListTile(
-                            title: Text(chrono.name),
-                            subtitle: Text(
-                              'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}',
-                              //'Creado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}\nEtiquetas: ${chrono.tags.join(', ')}',
-                            ),
-                            onTap: () {
-                              /**Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ChronoDetailView(chrono: chrono),
-                                ),
-                              );*/
-                            },
-                          );
-                        },
+                    child: Container(
+                      margin: EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
                       ),
+                      child: chronos.isEmpty
+                        ? Center(
+                            child: Text(
+                              'No has creado ningún Chrono',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: chronos.length,
+                            itemBuilder: (context, index) {
+                              final chrono = chronos[index];
+                              return Container(
+                                margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: ListTile(
+                                  title: Text(chrono.name),
+                                  subtitle: Text(
+                                    'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}',
+                                    //'Creado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}\nEtiquetas: ${chrono.tags.join(', ')}',
+                                  ),
+                                  onTap: () => context.go('/chrono', extra: chrono),
+                                )
+                              );
+                            },
+                          ),
+                    ),
                   ),
                 ],
               ),
