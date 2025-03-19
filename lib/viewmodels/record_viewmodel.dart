@@ -17,6 +17,12 @@ class RecordViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Trae todos los registros (visibles) de un Chrono específico y actualiza el state.
+  Future<void> fetchRecordsByChrono(int chronoId) async {
+    _records = await _recordService.getRecordsByChrono(chronoId);
+    notifyListeners();
+  }
+
   /// Agrega un nuevo registro y actualiza el state.
   Future<void> addRecord(int chronoId, Duration time) async {
     final newRecord = RecordModel(chronoId: chronoId, createdAt: DateTime.now(), recordedTime: time);

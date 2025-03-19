@@ -25,7 +25,7 @@ class DatabaseHelper {
     final path = join(dbPath, 'chronokeeper.db');
 
     // Descomentar para resetear base de datos.
-    databaseFactory.deleteDatabase(path);
+    //databaseFactory.deleteDatabase(path);
 
     return await openDatabase(
       path,

@@ -84,7 +84,7 @@ class MyChronosViewState extends State<MyChronosView> {
                                     'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}',
                                     //'Creado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}\nEtiquetas: ${chrono.tags.join(', ')}',
                                   ),
-                                  onTap: () => context.go('/chrono', extra: chrono),
+                                  onTap: () => context.push('/chrono', extra: chrono),
                                 )
                               );
                             },

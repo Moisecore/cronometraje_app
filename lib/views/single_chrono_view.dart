@@ -28,7 +28,7 @@ class SingleChronoView extends StatelessWidget {
               children: [
                 Text('Nombre: ${chrono.name}'),
                 const SizedBox(height: 20),
-                Text('Fecha de creación: ${chrono.createdAt}'),
+                Text('Fecha de creación: ${chrono.createdAt.toLocal()}'),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {

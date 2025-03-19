@@ -6,6 +6,7 @@ import 'package:cronometraje_app/viewmodels/record_viewmodel.dart';
 import 'package:cronometraje_app/views/create_chrono_view.dart';
 import 'package:cronometraje_app/views/my_chronos_view.dart';
 import 'package:cronometraje_app/views/my_records_view.dart';
+import 'package:cronometraje_app/views/single_chrono_records_view.dart';
 import 'package:cronometraje_app/views/single_chrono_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,12 +55,12 @@ final GoRouter _router = GoRouter(
       path: '/myRecords',
       builder: (context, state) => const MyRecordsView(),
     ),
-    /**GoRoute(
+    GoRoute(
       path: '/chrono/records',
       builder: (context, state) {
         return SingleChronoRecordsView(chrono: state.extra as ChronoModel);
       }
-    ),*/
+    ),
   ],
 );
 
