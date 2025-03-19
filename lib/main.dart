@@ -1,7 +1,11 @@
 import 'package:cronometraje_app/models/chrono_model.dart';
 import 'package:cronometraje_app/services/chrono_service.dart';
+import 'package:cronometraje_app/services/record_service.dart';
+import 'package:cronometraje_app/viewmodels/chrono_record_viewmodel.dart';
+import 'package:cronometraje_app/viewmodels/record_viewmodel.dart';
 import 'package:cronometraje_app/views/create_chrono_view.dart';
 import 'package:cronometraje_app/views/my_chronos_view.dart';
+import 'package:cronometraje_app/views/my_records_view.dart';
 import 'package:cronometraje_app/views/single_chrono_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,10 +50,10 @@ final GoRouter _router = GoRouter(
         return SingleChronoView(chrono: state.extra as ChronoModel);
       },
     ),
-    /**GoRoute(
+    GoRoute(
       path: '/myRecords',
       builder: (context, state) => const MyRecordsView(),
-    ),*/
+    ),
     /**GoRoute(
       path: '/chrono/records',
       builder: (context, state) {
@@ -90,6 +94,8 @@ class ChronokeeperApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ChronoViewModel(ChronoService())),
+        ChangeNotifierProvider(create: (_) => RecordViewModel(RecordService())),
+        ChangeNotifierProvider(create: (_) => ChronoRecordViewModel(ChronoViewModel(ChronoService()), RecordViewModel(RecordService()))),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

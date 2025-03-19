@@ -36,7 +36,7 @@ class ChronoViewModel extends ChangeNotifier {
     await fetchChronos();
   }
 
-  /// Actualiza el estado de un Chrono (0: stopped, 1: running, 2: paused) y el state.
+  /// Actualiza el estado de un Chrono (0: detenido, 1: andando, 2: pausado) y el state.
   Future<void> updateChronoState(int id, ChronoState newState) async {
     await _chronoService.updateChronoState(id, newState);
     await fetchChronos();

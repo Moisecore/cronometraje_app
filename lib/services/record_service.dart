@@ -16,6 +16,30 @@ class RecordService {
   }
 
   /// Obtiene los registros de la tabla 'records' que están visibles (no han sido soft-deleted).
+  Future<List<RecordModel>> getRecords() async {
+    final db = await _dbHelper.database;
+    final List<Map<String, dynamic>> maps =
+      await db.query(
+        'records', 
+        where: 'hidden = ?', 
+        whereArgs: [0]
+      );
+    return List.generate(maps.length, (i) => RecordModel.fromMap(maps[i]));
+  }
+
+  /// Obtiene los registros de la tabla 'records' que no están visibles (han sido soft-deleted).
+  Future<List<RecordModel>> getHiddenRecords() async {
+    final db = await _dbHelper.database;
+    final List<Map<String, dynamic>> maps =
+      await db.query(
+        'records', 
+        where: 'hidden = ?', 
+        whereArgs: [1]
+      );
+    return List.generate(maps.length, (i) => RecordModel.fromMap(maps[i]));
+  }
+
+  /// Obtiene los registros de la tabla 'records' que están visibles (no han sido soft-deleted) para un Chrono específico.
   Future<List<RecordModel>> getRecordsByChrono(int chronoId) async {
     final db = await _dbHelper.database;
     final List<Map<String, dynamic>> maps =
@@ -29,7 +53,7 @@ class RecordService {
     });
   }
 
-  /// Obtiene los registros de la tabla 'records' que no están visibles (han sido soft-deleted).
+  /// Obtiene los registros de la tabla 'records' que no están visibles (han sido soft-deleted) para un Chrono específico.
   Future<List<RecordModel>> getHiddenRecordsByChrono(int chronoId) async {
     final db = await _dbHelper.database;
     final List<Map<String, dynamic>> maps =
