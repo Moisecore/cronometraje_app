@@ -118,7 +118,7 @@ class SingleChronoViewModel extends ChangeNotifier {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("Registro guardado"),
-          content: Text("Chrono '${chrono.name}': el tiempo $formattedTime se ha registrado exitosamente con fecha ${formatDate(chrono.createdAt.toLocal().toString())}."),
+          content: Text("Chrono '${chrono.name}': el tiempo $formattedTime se ha registrado exitosamente."),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),

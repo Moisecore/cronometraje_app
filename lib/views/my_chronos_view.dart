@@ -31,81 +31,83 @@ class MyChronosViewState extends State<MyChronosView> {
 
   @override
   Widget build(BuildContext context) {
-    final chronoViewModel = Provider.of<ChronoViewModel>(context);
-    final chronos = chronoViewModel.chronos;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mis Chronos'),
-        backgroundColor: Theme.of(context).primaryColor,
-        centerTitle: true,
-        leading: const Icon(Icons.timer),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0), 
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.85,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Center(
-                      child: ElevatedButton.icon(
-                        onPressed: () => context.push('/createChrono'),
-                        icon: Icon(Icons.add),
-                        label: Text('Crear Chrono'),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(10.0),
-                      padding: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: chronos.isEmpty
-                        ? Center(
-                            child: Text(
-                              'No has creado ningún Chrono',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: chronos.length,
-                            itemBuilder: (context, index) {
-                              final chrono = chronos[index];
-                              return Container(
-                                margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: ListTile(
-                                  title: Text(chrono.name),
-                                  subtitle: Text(
-                                    'Creado: ${formatDate(chrono.createdAt.toLocal().toString())}',
-                                    //'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}',
-                                    //'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}',
-                                    //'Creado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}\nEtiquetas: ${chrono.tags.join(', ')}',
-                                  ),
-                                  onTap: () => context.push('/chrono', extra: chrono),
-                                )
-                              );
-                            },
+    return Consumer<ChronoViewModel>(
+      builder: (context, chronoViewModel, child) {
+        final chronos = chronoViewModel.chronos;
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Mis Chronos'),
+            backgroundColor: Theme.of(context).primaryColor,
+            centerTitle: true,
+            leading: const Icon(Icons.timer),
+          ),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0), 
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.85,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: ElevatedButton.icon(
+                            onPressed: () => context.push('/createChrono'),
+                            icon: Icon(Icons.add),
+                            label: Text('Crear Chrono'),
                           ),
-                    ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.all(10.0),
+                          padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: chronos.isEmpty
+                            ? Center(
+                                child: Text(
+                                  'No has creado ningún Chrono',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: chronos.length,
+                                itemBuilder: (context, index) {
+                                  final chrono = chronos[index];
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(chrono.name),
+                                      subtitle: Text(
+                                        'Creado: ${formatDate(chrono.createdAt.toLocal().toString())}',
+                                        //'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}',
+                                        //'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}',
+                                        //'Creado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}\nEtiquetas: ${chrono.tags.join(', ')}',
+                                      ),
+                                      onTap: () => context.push('/chrono', extra: chrono),
+                                    )
+                                  );
+                                },
+                              ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }
