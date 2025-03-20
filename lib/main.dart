@@ -96,7 +96,15 @@ class ChronokeeperApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => ChronoViewModel(ChronoService())),
         ChangeNotifierProvider(create: (_) => RecordViewModel(RecordService())),
-        ChangeNotifierProvider(create: (_) => ChronoRecordViewModel(ChronoViewModel(ChronoService()), RecordViewModel(RecordService()))),
+        ChangeNotifierProxyProvider2<ChronoViewModel, RecordViewModel, ChronoRecordViewModel>(
+          create: (context) => ChronoRecordViewModel(
+            Provider.of<ChronoViewModel>(context, listen: false), 
+            Provider.of<RecordViewModel>(context, listen: false)
+          ),
+          update: (context, chronoVM, recordVM, prev) {
+            return prev ?? ChronoRecordViewModel(chronoVM, recordVM);
+          },
+        ),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

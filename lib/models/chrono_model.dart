@@ -5,7 +5,7 @@ class ChronoModel {
   final int? id;
   final String name;
   final DateTime createdAt;
-  final ChronoState state;
+  ChronoState state;
   final List<String> tags;
   final int hidden; // Campo para soft-delete, 0: visible, 1: soft-deleted.
 

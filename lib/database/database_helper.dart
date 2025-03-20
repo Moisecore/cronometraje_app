@@ -47,7 +47,7 @@ class DatabaseHelper {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             chronoId INTEGER,
             createdAt TEXT,
-            duration INTEGER,
+            recordedTime INTEGER,
             comment TEXT,
             hidden INTEGER DEFAULT 0,
             FOREIGN KEY (chronoId) REFERENCES chronos (id) ON DELETE CASCADE

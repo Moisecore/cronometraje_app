@@ -1,3 +1,4 @@
+import 'package:cronometraje_app/utils/formatter.dart';
 import 'package:cronometraje_app/viewmodels/chrono_record_viewmodel.dart';
 import 'package:cronometraje_app/viewmodels/record_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +17,31 @@ class MyRecordsView extends StatefulWidget {
 }
 
 class MyRecordsViewState extends State<MyRecordsView> {
+  bool _dataLoaded = false; // Para evitar múltiples llamadas a updateData()
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ChronoViewModel>(context, listen: false).fetchChronos();
-      Provider.of<RecordViewModel>(context, listen: false).fetchRecords();
-      Provider.of<ChronoRecordViewModel>(context, listen: false).findChronosWithRecords();
-      Provider.of<ChronoRecordViewModel>(context, listen: false).findMostRecentRecordsPerChrono();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final chronoVM = Provider.of<ChronoViewModel>(context, listen: false);
+      final recordVM = Provider.of<RecordViewModel>(context, listen: false);
+      final chronoRecordVM = Provider.of<ChronoRecordViewModel>(context, listen: false);
+
+      await chronoVM.fetchChronos();  // Cargar Chronos
+      await recordVM.fetchRecords();  // Cargar Registros
+      await chronoRecordVM.updateData();  // Asegurar que los datos estén sincronizados
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_dataLoaded) {
+      _dataLoaded = true;  // Asegurar que solo se ejecute una vez
+      Future.microtask(() {
+        Provider.of<ChronoRecordViewModel>(context, listen: false).updateData();
+      });
+    }
   }
 
   @override
@@ -95,12 +112,12 @@ class MyRecordsViewState extends State<MyRecordsView> {
                                     child: ListTile(
                                       title: Text(chronoWithRecords.name),
                                       subtitle: Text(
-                                        '''id: ${chronoWithRecords.id}\n
-                                        Creado: ${chronoWithRecords.createdAt.toLocal()}\n
-                                        Último registro: ${mostRecentRecords[chronoWithRecords.id]!.recordedTime}}''',
+                                        //'''id: ${chronoWithRecords.id}\n
+                                        '''Creado: ${formatDate(chronoWithRecords.createdAt.toLocal().toString())}\n
+                                        Último registro: ${formatDuration(mostRecentRecords[chronoWithRecords.id]!.recordedTime)}''',
                                         //'id: ${chronoWithRecords.id}\nCreado: ${chronoWithRecords.createdAt.toLocal()}\nEtiquetas: ${chronoWithRecords.tags.join(', ')}',
                                       ),
-                                      onTap: () => context.go('/chrono/records', extra: chronoWithRecords),
+                                      onTap: () => context.push('/chrono/records', extra: chronoWithRecords),
                                     )
                                   );
                                 },

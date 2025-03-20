@@ -1,3 +1,4 @@
+import 'package:cronometraje_app/utils/formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,12 @@ class MyChronosViewState extends State<MyChronosView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ChronoViewModel>(context, listen: false).fetchChronos();
     });
+  }
+
+  @override
+  void dispose() {
+    
+    super.dispose();
   }
 
   @override
@@ -81,7 +88,9 @@ class MyChronosViewState extends State<MyChronosView> {
                                 child: ListTile(
                                   title: Text(chrono.name),
                                   subtitle: Text(
-                                    'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}',
+                                    'Creado: ${formatDate(chrono.createdAt.toLocal().toString())}',
+                                    //'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}',
+                                    //'id: ${chrono.id}\nCreado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}',
                                     //'Creado: ${chrono.createdAt.toLocal()}\nEstado: ${chrono.state.toString().split('.').last}\nEtiquetas: ${chrono.tags.join(', ')}',
                                   ),
                                   onTap: () => context.push('/chrono', extra: chrono),

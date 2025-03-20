@@ -14,6 +14,7 @@ class ChronoViewModel extends ChangeNotifier {
   /// Trae todos los Chronos (visibles) de la base de datos y actualiza el state.
   Future<void> fetchChronos() async {
     _chronos = await _chronoService.getChronos();
+    //print("✅ Chronos cargados en ViewModel: ${_chronos.length}");
     notifyListeners();
   }
 

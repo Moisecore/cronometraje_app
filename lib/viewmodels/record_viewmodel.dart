@@ -6,20 +6,30 @@ import 'package:flutter/foundation.dart';
 class RecordViewModel extends ChangeNotifier {
   final RecordService _recordService;
 
-  List<RecordModel> _records = [];
-  List<RecordModel> get records => _records;
+  List<RecordModel> _allRecords = [];  // 🔹 Guarda todos los registros
+  List<RecordModel> _filteredRecords = []; // 🔹 Guarda registros filtrados
+
+  List<RecordModel> get records => _allRecords; 
+  List<RecordModel> get filteredRecords => _filteredRecords;
 
   RecordViewModel(this._recordService);
   
   /// Trae todos los registros (visibles) de la base de datos y actualiza el state.
   Future<void> fetchRecords() async {
-    _records = await _recordService.getRecords();
+    _allRecords = await _recordService.getRecords();
+    //print("✅ Registros cargados en ViewModel: ${_allRecords.length}");
     notifyListeners();
   }
 
   /// Trae todos los registros (visibles) de un Chrono específico y actualiza el state.
   Future<void> fetchRecordsByChrono(int chronoId) async {
-    _records = await _recordService.getRecordsByChrono(chronoId);
+    _filteredRecords = await _recordService.getRecordsByChrono(chronoId);
+    notifyListeners();
+  }
+
+  /// Filtra la lista de todos los registros para guardar los de un Chrono específico y actualiza el state.
+  Future<void> filterRecordsByChrono(int chronoId) async {
+    _filteredRecords = _allRecords.where((r) => r.chronoId == chronoId).toList();
     notifyListeners();
   }
 

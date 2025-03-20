@@ -1,8 +1,7 @@
-import 'package:cronometraje_app/viewmodels/chrono_record_viewmodel.dart';
+import 'package:cronometraje_app/utils/formatter.dart';
 import 'package:cronometraje_app/viewmodels/record_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:cronometraje_app/models/chrono_model.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 /// Vista de pantalla "Ver registros de Chrono".
@@ -30,7 +29,7 @@ class SingleChronoRecordsViewState extends State<SingleChronoRecordsView> {
   @override
   Widget build(BuildContext context) {
     final recordViewModel = Provider.of<RecordViewModel>(context);
-    final records = recordViewModel.records;
+    final records = recordViewModel.filteredRecords;
     final lastRecord = records.isNotEmpty ? records.last : null;
 
     return Scaffold(
@@ -51,10 +50,10 @@ class SingleChronoRecordsViewState extends State<SingleChronoRecordsView> {
                 children: [
                   Text(widget.chrono.name),
                   const SizedBox(height: 16),
-                  Text('Fecha de creación: ${widget.chrono.createdAt.toLocal()}'),
+                  Text('Fecha de creación: ${formatDate(widget.chrono.createdAt.toLocal().toString())}'),
                   const SizedBox(height: 16),
                   if (lastRecord != null)
-                    Text('Último tiempo registrado: ${lastRecord.recordedTime}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text('Último tiempo registrado: ${formatDuration(lastRecord.recordedTime)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 16),
                   Expanded(
                     child: Container(
@@ -77,8 +76,8 @@ class SingleChronoRecordsViewState extends State<SingleChronoRecordsView> {
                               final record = records[index];
                               return Card(
                                 child: ListTile(
-                                  title: Text('Tiempo: ${record.recordedTime}'),
-                                  subtitle: Text('Fecha: ${record.createdAt.toLocal()}'),
+                                  title: Text('Tiempo: ${formatDuration(record.recordedTime)}'),
+                                  subtitle: Text('Fecha: ${formatDate(record.createdAt.toLocal().toString())}'),
                                   trailing: record.comment != null ? Text(record.comment!) : null,
                                 ),
                               );
